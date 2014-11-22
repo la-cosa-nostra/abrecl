@@ -236,6 +236,16 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
    End Google Analytics -->
   {{#pass}}
   <!--script src="{{=URL('static','js/share.js',vars=dict(static=URL('static','images')))}}"></script-->
+  <script>
+    function sleep(milliseconds) {
+      var start = new Date().getTime();
+      for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds){
+          break;
+        }
+      }
+    }
+  </script>
   {{block js}}
   {{end}}
 </body>

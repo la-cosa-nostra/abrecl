@@ -8,8 +8,9 @@
         padding:15px 10px;
         position: fixed;
         bottom: -60px;
-        left: 50%;
-        background: #fff;
+        left: 48%;
+        background: #333;
+        color: white;
         border-radius: 100%;
         cursor:pointer;
     }
@@ -41,7 +42,7 @@
  </style>
 {{end}}
 <div id="loader">
-    <div style="color: white;text-align: center;margin-top: 20%;font-size: 50px;"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> <br> Geolocalizando ...</div>
+    <div style="color: white;text-align: center;margin-top: 20%;font-size: 50px;"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> <br> <span id="text-loader">Geolocalizando ...</span></div>
 </div>
 <div id="map" style="position: fixed; bottom: 0; top: 50px; right: 0; left: 0;"></div>
 <div id="geo-locate" onclick="javascript:geoLocate();">Mi ubicación</div>
@@ -49,9 +50,12 @@
 {{block js}}
  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 <script>
+    var url_georeverse = 'http://nominatim.openstreetmap.org/reverse?format=json&'; // lat=-33.4361132&lon=-70.6300473
+    var url_base_colegios = 'http://data.mineduc.cl/odata/Establecimiento_Matricula/?$format=json&$filter=nombre_comuna%20eq%20';
     // create a map in the "map" div, set the view to a given place and zoom
     var map = L.map('map').setView([-33.4361132, -70.6300473], 18);
     var GeoLayer = L.layerGroup();
+    var GeoColegios = L.layerGroup();
     GeoLayer.addTo(map);
 
     // add an OpenStreetMap tile layer
@@ -71,11 +75,13 @@
 
         GeoLayer.clearLayers();
 
-        L.marker(e.latlng).addTo(GeoLayer)
-            .bindPopup("You are within " + radius + " meters from this point").openPopup();
+        L.marker(e.latlng).addTo(GeoLayer).bindPopup('<div id="options-geo-search"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Buscando información cercana ...</div>',{minWidth: 400}).openPopup();
+
         L.circle(e.latlng, radius).addTo(GeoLayer);
 
         $("div#loader").hide();
+
+        geoSearch(e.latlng);
     }
 
     map.on('locationfound', onLocationFound);
@@ -86,5 +92,48 @@
     }
 
     map.on('locationerror', onLocationError);
+
+    function geoSearch(latlng){
+        $.getJSON(url_georeverse+'lat='+latlng.lat+'&lon='+latlng.lng,function(res){
+            var direccion = 'ubicación desconocida';
+            var comuna = '';
+            if(res.display_name!=undefined){
+                direccion = res.display_name;
+            }
+            if(res.address!=undefined){
+                comuna = res.address.suburb;
+            }
+            console.info('buscando información ...');
+            $("#options-geo-search").empty()
+                .append(
+                    $('<div/>').text(direccion)
+                )
+                .append(
+                    $('<div/>').addClass('btn-group')
+                        .append($('<button/>').addClass('btn btn-default btn-geo-search').text('Farmacias').data('loading-text','<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Buscando farmacias ...').data('id','btn-farmacias').data('comuna',comuna))
+                        .append($('<button/>').addClass('btn btn-default btn-geo-search').text('Hospitales').data('loading-text','<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Buscando hospitales ...').data('id','btn-hospitales').data('comuna',comuna))
+                        .append($('<button/>').addClass('btn btn-default btn-geo-search').text('Colegios').data('loading-text','<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Buscando colegios ...').data('id','btn-colegios').data('comuna',comuna))
+                        .append($('<button/>').addClass('btn btn-default btn-geo-search').text('Jardines Infantiles').data('loading-text','<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Buscando jardines ...').data('id','btn-jardines').data('comuna',comuna))
+                );
+        });
+
+    }
+    $(document).ready(function(){
+        $("#map").on('click','.btn-geo-search',function(){
+            var that = $(this);
+            that.button('loading');
+            if(that.data('id')=='btn-colegios'){
+                $.getJSON(url_base_colegios+"'"+that.data('comuna')+"'",function(res){
+                    if(res.d.length>0){
+                        GeoColegios.clearLayers();
+                        $.each(res.d,function(d){
+                            L.marker(e.latlng).addTo(GeoColegios).bindPopup(d.toString(),{minWidth: 400}).openPopup();
+                        });
+                        that.button('reset');
+                    }
+                })
+            }
+        });
+    })
 </script>
 {{end}}
