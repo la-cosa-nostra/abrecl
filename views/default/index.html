@@ -1,36 +1,88 @@
 {{extend 'custom_layout.html'}}
 {{block head}}
  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+ <style>
+    div#geo-locate {
+        height: 100px;
+        width: 100px;
+        padding:15px 10px;
+        position: fixed;
+        bottom: -60px;
+        left: 50%;
+        background: #fff;
+        border-radius: 100%;
+        cursor:pointer;
+    }
+    div#loader{
+        display: none;
+        position:fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background:#333;
+        z-index:9999;
+        opacity: 0.8;
+    }
+    .glyphicon-refresh-animate {
+        -animation: spin .7s infinite linear;
+        -webkit-animation: spin2 .7s infinite linear;
+    }
+
+    @-webkit-keyframes spin2 {
+        from { -webkit-transform: rotate(0deg);}
+        to { -webkit-transform: rotate(360deg);}
+    }
+
+    @keyframes spin {
+        from { transform: scale(1) rotate(0deg);}
+        to { transform: scale(1) rotate(360deg);}
+    }
+ </style>
 {{end}}
+<div id="loader">
+    <div style="color: white;text-align: center;margin-top: 20%;font-size: 50px;"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> <br> Geolocalizando ...</div>
+</div>
 <div id="map" style="position: fixed; bottom: 0; top: 50px; right: 0; left: 0;"></div>
+<div id="geo-locate" onclick="javascript:geoLocate();">Mi ubicación</div>
 
 {{block js}}
  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 <script>
     // create a map in the "map" div, set the view to a given place and zoom
     var map = L.map('map').setView([-33.4361132, -70.6300473], 18);
+    var GeoLayer = L.layerGroup();
+    GeoLayer.addTo(map);
 
     // add an OpenStreetMap tile layer
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    map.locate({setView: true, maxZoom: 18});
+    function geoLocate(){
+        $("div#loader").show();
+        map.locate({setView: true, maxZoom: 18});
+    }
+    geoLocate();
 
     function onLocationFound(e) {
         var radius = e.accuracy / 2;
         // console.info(e.latlng);
 
-        L.marker(e.latlng).addTo(map)
-            .bindPopup("You are within " + radius + " meters from this point").openPopup();
+        GeoLayer.clearLayers();
 
-        L.circle(e.latlng, radius).addTo(map);
+        L.marker(e.latlng).addTo(GeoLayer)
+            .bindPopup("You are within " + radius + " meters from this point").openPopup();
+        L.circle(e.latlng, radius).addTo(GeoLayer);
+
+        $("div#loader").hide();
     }
 
     map.on('locationfound', onLocationFound);
 
     function onLocationError(e) {
         alert(e.message);
+        $("div#loader").hide();
     }
 
     map.on('locationerror', onLocationError);
