@@ -11,9 +11,11 @@ def index():
     return dict(dataset=dataset,action=action,comuna=comuna)
 
 def view():
-    pnc = db.pnac(request.arg(0)) or False
+    pnc = db.pnac(request.args(0)) or False
 
-    if pnc:
-        return dict(pnc=pnc)
-    else:
-        return 'invalid request'
+    # if pnc:
+    #     return dict(pnc=pnc)
+    # else:
+    #     return 'invalid request'
+
+    return dict(pnc=pnc)

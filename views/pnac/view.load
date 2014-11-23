@@ -1,0 +1,58 @@
+<h3>{{=pnc.nombre_oficial}}</h3>
+
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <th>Región</th>
+            <td>{{=pnc.region}}</td>
+        </tr>
+        <tr>
+            <th>Comuna</th>
+            <td>{{=pnc.nombre_comuna}}</td>
+        </tr>
+        <tr>
+            <th>Servicio de Salud</th>
+            <td>{{=pnc.servicio_salud}}</td>
+        </tr>
+        <tr>
+            <th>Perteneciente</th>
+            <td>{{=pnc.perteneciente}}</td>
+        </tr>
+        <tr>
+            <th>Tipo Establecimiento</th>
+            <td>{{=pnc.tipo_establecimiento}}</td>
+        </tr>
+        <tr>
+            <th>Tipo Estrategia</th>
+            <td>{{=pnc.tipo_estrategia}}</td>
+        </tr>
+        <tr>
+            <th>Certificación</th>
+            <td>{{=pnc.certificacion}}</td>
+        </tr>
+        <tr>
+            <th>Dependencia</th>
+            <td>{{=pnc.dependencia}}</td>
+        </tr>
+        <tr>
+            <th>Nivel de Atención</th>
+            <td>{{=pnc.nivel_atencion}}</td>
+        </tr>
+        <tr>
+            <th>Dirección</th>
+            <td>{{=pnc.via}} {{=pnc.direccion}} {{=pnc.numero}}</td>
+        </tr>
+        <tr>
+            <th>Telefono</th>
+            <td>{{=pnc.telefono}}</td>
+        </tr>
+        <tr>
+            <th>Vigencia Desde</th>
+            <td>{{=pnc.fecha_vigencia_desde}}</td>
+        </tr>
+        <tr>
+            <th>Cerrado Hasta</th>
+            <td>{{=pnc.fecha_cierre_hasta}}</td>
+        </tr>
+    </tbody>
+</table>
