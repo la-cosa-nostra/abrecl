@@ -1,0 +1,34 @@
+{{extend 'custom_layout.html'}}
+
+<h4>Registrate!</h4>
+
+
+<!--
+Paso 2:
+- Sistema de salud
+- Previsión
+
+Paso 3 (datos de la familia):
+- Nombre
+- Fecha de nacimiento
+- Carga?
+- if not carga:
+ + Previsión
+-->
+<form class="form-horizontal" role="form">
+  <div class="form-group">
+    <div class="col-sm-12">
+      <input type="text" class="form-control" placeholder="Sistema de Salud">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12">
+      <input type="text" class="form-control" placeholder="Previsión">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <a href="{{=URL('paso3')}}" type="submit" class="btn btn-success">Guardar</a>
+    </div>
+  </div>
+</form>

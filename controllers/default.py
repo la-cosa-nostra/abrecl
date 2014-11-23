@@ -125,3 +125,15 @@ def action_submenu():
 def admin():
     response.view = 'generic.%s'%request.extension
     return {'menu':UL([A(t, _href=URL(args=t)) for t in db.tables]),'admin':SQLFORM.smartgrid(db[request.args(0) or 'menu_abrecl'])}
+
+def login():
+    return dict()
+
+def paso1():
+    return dict()
+
+def paso2():
+    return dict()
+
+def paso3():
+    return dict()

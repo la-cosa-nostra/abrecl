@@ -19,7 +19,7 @@
         $("#direccion b").append($("<a/>").attr('id','brand-geo-map').addClass('pull-right').html('<i class="glyphicon glyphicon-globe"></i>'));
 
         $("#direccion i.glyphicon-globe").on('click',function(){
-            $(".result-opt").hide();
+            $(".result-opt,input").hide();
             $("#map").css({
                 'width':'auto',
                 'height':'auto',
@@ -44,7 +44,7 @@
 
         $("ul.result-opt >li").on('click',function(){
             var url_action = "{{=URL('pnac','view.load')}}"+'/'+$(this).data('id');
-            $(".result-opt").hide();
+            $(".result-opt,input").hide();
             web2py_component(url_action,'view-form');
         })
     });

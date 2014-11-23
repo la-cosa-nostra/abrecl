@@ -1,0 +1,49 @@
+{{extend 'custom_layout.html'}}
+
+<h4>Datos de tu Familia</h4>
+
+
+<!--
+Paso 3 (datos de la familia):
+- Nombre
+- Fecha de nacimiento
+- Carga?
+- if not carga:
+ + Previsión
+-->
+<form class="form-horizontal" role="form">
+  <div class="form-group">
+    <div class="col-sm-12">
+      <input type="text" class="form-control" placeholder="Nombre">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12">
+      <input type="text" class="form-control" placeholder="Fecha de nacimiento">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox"> ¿Carga?
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12">
+      <input type="text" class="form-control" placeholder="Sistema de Salud">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-12">
+      <input type="text" class="form-control" placeholder="Previsión">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-success">Guardar</button>
+    </div>
+  </div>
+</form>

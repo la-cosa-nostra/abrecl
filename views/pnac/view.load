@@ -1,58 +1,102 @@
-<h3>{{=pnc.nombre_oficial}}</h3>
+<h3 id="titulo-view" style="cursor:pointer;text-align:center">{{=pnc.nombre_oficial}}</h3>
 
-<table class="table table-striped">
-    <tbody>
-        <tr>
-            <th>Región</th>
-            <td>{{=pnc.region}}</td>
-        </tr>
-        <tr>
-            <th>Comuna</th>
-            <td>{{=pnc.nombre_comuna}}</td>
-        </tr>
-        <tr>
-            <th>Servicio de Salud</th>
-            <td>{{=pnc.servicio_salud}}</td>
-        </tr>
-        <tr>
-            <th>Perteneciente</th>
-            <td>{{=pnc.perteneciente}}</td>
-        </tr>
-        <tr>
-            <th>Tipo Establecimiento</th>
-            <td>{{=pnc.tipo_establecimiento}}</td>
-        </tr>
-        <tr>
-            <th>Tipo Estrategia</th>
-            <td>{{=pnc.tipo_estrategia}}</td>
-        </tr>
-        <tr>
-            <th>Certificación</th>
-            <td>{{=pnc.certificacion}}</td>
-        </tr>
-        <tr>
-            <th>Dependencia</th>
-            <td>{{=pnc.dependencia}}</td>
-        </tr>
-        <tr>
-            <th>Nivel de Atención</th>
-            <td>{{=pnc.nivel_atencion}}</td>
-        </tr>
-        <tr>
-            <th>Dirección</th>
-            <td>{{=pnc.via}} {{=pnc.direccion}} {{=pnc.numero}}</td>
-        </tr>
-        <tr>
-            <th>Telefono</th>
-            <td>{{=pnc.telefono}}</td>
-        </tr>
-        <tr>
-            <th>Vigencia Desde</th>
-            <td>{{=pnc.fecha_vigencia_desde}}</td>
-        </tr>
-        <tr>
-            <th>Cerrado Hasta</th>
-            <td>{{=pnc.fecha_cierre_hasta}}</td>
-        </tr>
-    </tbody>
-</table>
+<div id="datos">
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th>Región</th>
+                <td>{{=pnc.region}}</td>
+            </tr>
+            <tr>
+                <th>Comuna</th>
+                <td>{{=pnc.nombre_comuna}}</td>
+            </tr>
+            <tr>
+                <th>Servicio de Salud</th>
+                <td>{{=pnc.servicio_salud}}</td>
+            </tr>
+            <tr>
+                <th>Perteneciente</th>
+                <td>{{=pnc.perteneciente}}</td>
+            </tr>
+            <tr>
+                <th>Tipo Establecimiento</th>
+                <td>{{=pnc.tipo_establecimiento}}</td>
+            </tr>
+            <tr>
+                <th>Tipo Estrategia</th>
+                <td>{{=pnc.tipo_estrategia}}</td>
+            </tr>
+            <tr>
+                <th>Certificación</th>
+                <td>{{=pnc.certificacion}}</td>
+            </tr>
+            <tr>
+                <th>Dependencia</th>
+                <td>{{=pnc.dependencia}}</td>
+            </tr>
+            <tr>
+                <th>Nivel de Atención</th>
+                <td>{{=pnc.nivel_atencion}}</td>
+            </tr>
+            <tr>
+                <th>Dirección</th>
+                <td>{{=pnc.via}} {{=pnc.direccion}} {{=pnc.numero}}</td>
+            </tr>
+            <tr>
+                <th>Telefono</th>
+                <td>{{=pnc.telefono}}</td>
+            </tr>
+            <tr>
+                <th>Vigencia Desde</th>
+                <td>{{=pnc.fecha_vigencia_desde}}</td>
+            </tr>
+            <tr>
+                <th>Cerrado Hasta</th>
+                <td>{{=pnc.fecha_cierre_hasta}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="text-align:center">
+
+        <button type="button" class="btn btn-default" id="mejorar">Ayudanos a Mejorar!</button>
+    </div>
+</div>
+
+<div id="form-mejorar" style="display:none;">
+    <form role="form">
+        <div style="text-align:center;" class="clearfix">
+            <div class="rating">
+                 <i class="glyphicon glyphicon-star"></i><i class="glyphicon glyphicon-star"></i><i class="glyphicon glyphicon-star"></i><i class="glyphicon glyphicon-star"></i><i class="glyphicon glyphicon-star-empty"></i>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="¿Que te gusto?">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="¿Que no te gusto?">
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" placeholder="Describe tu experiencia"></textarea>
+        </div>
+        <button type="submit" class="btn btn-default">Enviar</button>
+    </form>
+</div>
+<div class="clearfix">
+    <hr>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $("#titulo-view").on('click',function(){
+            $("#datos").show();
+            $("#form-mejorar").hide();
+        })
+
+        $("#mejorar").on('click',function(){
+            $("#datos").hide();
+            $("#form-mejorar").show();
+        })
+    })
+</script>

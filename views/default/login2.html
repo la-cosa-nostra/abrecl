@@ -1,0 +1,40 @@
+{{extend 'custom_layout.html'}}
+
+<h4>AbreCL</h4>
+
+
+<!--
+El registro de usuarios debe comenzar con los datos base de quien se registra:
+
+Paso 1:
+- Nombre
+- Rut
+- Fecha de nacimiento
+- Región
+- Comuna
+
+Paso 2:
+- Sistema de salud
+- Previsión
+
+Paso 3 (datos de la familia):
+- Nombre
+- Fecha de nacimiento
+- Carga?
+- if not carga:
+ + Previsión
+-->
+<div id="form-mejorar">
+    <form role="form">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="¿Que te gusto?">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="¿Que no te gusto?">
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" placeholder="Describe tu experiencia"></textarea>
+        </div>
+        <button type="submit" class="btn btn-default">Enviar</button>
+    </form>
+</div>
