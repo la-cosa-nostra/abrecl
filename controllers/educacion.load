@@ -1,0 +1,13 @@
+<ul class="list-group">
+    <li class="list-group-item">
+        <span class="badge"><i class="glyphicon glyphicon-chevron-right"></i></span>
+        ITEM 1
+    </li>
+</ul>
+
+<script>
+    $(document).ready(function(){
+        $("#actions").hide();
+        $("#loader").hide();
+    });
+</script>

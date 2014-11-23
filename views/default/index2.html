@@ -1,0 +1,233 @@
+{{extend 'custom_layout.html'}}
+{{extend 'custom_layout.html'}}
+{{block head}}
+ <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+ <style>
+    div#geo-locate {
+        /*height: 100px;
+        width: 100px;*/
+        padding:15px 10px;
+        /*position: fixed;*/
+        /*bottom: -60px;
+        left: 48%;*/
+        background: #333;
+        color: white;
+        /*border-radius: 100%;*/
+        cursor:pointer;
+        /*display: none;*/
+    }
+    div#loader{
+        /*display: none;*/
+        position:fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background:#333;
+        z-index:9999;
+        opacity: 0.8;
+    }
+    .glyphicon-refresh-animate {
+        -animation: spin .7s infinite linear;
+        -webkit-animation: spin2 .7s infinite linear;
+    }
+
+    @-webkit-keyframes spin2 {
+        from { -webkit-transform: rotate(0deg);}
+        to { -webkit-transform: rotate(360deg);}
+    }
+
+    @keyframes spin {
+        from { transform: scale(1) rotate(0deg);}
+        to { transform: scale(1) rotate(360deg);}
+    }
+    #actions{
+        text-align: center;
+    }
+
+    #actions i{
+        font-size: 50px;
+    }
+    #actions a{
+        text-decoration: none;
+    }
+    #brand-action{
+        text-transform: capitalize;
+    }
+    .volver_action{
+        cursor: pointer;
+    }
+    ul.opciones li{
+        cursor: pointer;
+    }
+ </style>
+{{end}}
+<div id="map" style="width:0px;height:0px;position:fixed;bottom:0;right:0;"></div>
+<div id="loader">
+    <div style="color: white;text-align: center;margin-top: 10%;font-size: 50px;"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> <br> <span id="text-loader">Geolocalizando</span></div>
+</div>
+
+<div id="direccion"><div id="geo-locate" onclick="javascript:geoLocate();">Mi ubicación</div></div>
+
+<div id="actions">
+    <div class="row">
+        <div class="col-xs-4 col-md-4 action" data-id="salud">
+            <a href="#" class="thumbnail">
+                <i class="glyphicon glyphicon-info-sign"></i> <br>
+                Salud
+            </a>
+        </div>
+
+        <div class="col-xs-4 col-md-4 action" data-id="educacion">
+            <a href="#" class="thumbnail">
+                <i class="glyphicon glyphicon-info-sign"></i> <br>
+                Educación
+            </a>
+        </div>
+
+        <div class="col-xs-4 col-md-4 action" data-id="seguridad">
+            <a href="#" class="thumbnail">
+                <i class="glyphicon glyphicon-info-sign"></i> <br>
+                Seguridad
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-4 col-md-4 action" data-id="sociedad">
+            <a href="#" class="thumbnail">
+                <i class="glyphicon glyphicon-info-sign"></i> <br>
+                Sociedad
+            </a>
+        </div>
+
+        <div class="col-xs-4 col-md-4 action" data-id="familia">
+            <a href="#" class="thumbnail">
+                <i class="glyphicon glyphicon-info-sign"></i> <br>
+                Familia
+            </a>
+        </div>
+
+        <div class="col-xs-4 col-md-4 action" data-id="turismo">
+            <a href="#" class="thumbnail">
+                <i class="glyphicon glyphicon-info-sign"></i> <br>
+                Turismo
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-4 col-md-4 action" data-id="tramites">
+            <a href="#" class="thumbnail">
+                <i class="glyphicon glyphicon-info-sign"></i> <br>
+                Trámites
+            </a>
+        </div>
+
+        <div class="col-xs-4 col-md-4 action" data-id="energia">
+            <a href="#" class="thumbnail">
+                <i class="glyphicon glyphicon-info-sign"></i> <br>
+                Energia
+            </a>
+        </div>
+
+        <div class="col-xs-4 col-md-4 action" data-id="negocios">
+            <a href="#" class="thumbnail">
+                <i class="glyphicon glyphicon-info-sign"></i> <br>
+                Negocios
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="response"></div>
+
+{{block js}}
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+<script>
+
+    var url_georeverse = 'http://nominatim.openstreetmap.org/reverse?format=json&'; // lat=-33.4361132&lon=-70.6300473
+    var url_base_colegios = "{{=URL('default','search_schools.json')}}";
+    // create a map in the "map" div, set the view to a given place and zoom
+    var map = L.map('map').setView([-33.4361132, -70.6300473], 18);
+    var GeoLayer = L.layerGroup();
+    var GeoColegios = L.layerGroup();
+    var coords_location = null;
+    GeoLayer.addTo(map);
+    GeoColegios.addTo(map);
+
+    // add an OpenStreetMap tile layer
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    function geoLocate(){
+        $("div#loader").show();
+        map.locate({setView: true, maxZoom: 18});
+    }
+    geoLocate();
+
+    function onLocationFound(e) {
+        // var radius = e.accuracy / 2;
+        // // console.info(e.latlng);
+
+        // GeoLayer.clearLayers();
+
+        // var marker = L.marker(e.latlng).addTo(GeoLayer);
+        // marker.bindPopup('<div id="options-geo-search"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Buscando información cercana ...</div>',{minWidth: 400}).openPopup();
+
+        // L.circle(e.latlng, radius).addTo(GeoLayer);
+
+        coords_location = e.latlng;
+
+        geoSearch(e.latlng);
+    }
+
+    map.on('locationfound', onLocationFound);
+
+    function onLocationError(e) {
+        alert(e.message);
+        $("div#loader").hide();
+    }
+
+    map.on('locationerror', onLocationError);
+
+    function geoSearch(latlng,marker_id){
+        $.getJSON(url_georeverse+'lat='+latlng.lat+'&lon='+latlng.lng,function(res){
+            var direccion = 'ubicación desconocida';
+            var comuna = '';
+            if(res.display_name!=undefined){
+                direccion = res.display_name;
+            }
+            if(res.address!=undefined){
+                comuna = res.address.suburb;
+            }
+            console.info('buscando información ...');
+            $("#direccion").empty()
+                .append($('<div/>').html('<b>Estás en : '+comuna+'</b>'))
+                .data('georeverse',res.toString());
+
+            $("div#loader").hide();
+        });
+
+    }
+    $(document).ready(function(){
+        $("#actions").find('.action').on('click',function(){
+            var action = $(this);
+            var url_action = "{{=URL('default','action_menu.load')}}";
+
+            url_action = url_action+'?action='+action.data('id');
+
+            $("#loader #text-loader").html('Cargando categoría ');
+            $("#loader").show();
+            web2py_component(url_action,'response');
+        });
+        $("#response").on('click','.volver_action',function(){
+            $("#response").empty();
+            $("#brand-action").remove();
+            $("#actions").show();
+
+        });
+    })
+</script>
+{{end}}

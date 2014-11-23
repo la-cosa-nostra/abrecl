@@ -50,13 +50,29 @@
 {{block js}}
  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 <script>
+    /***  little hack starts here ***/
+    L.Map = L.Map.extend({
+        openPopup: function(popup) {
+            //        this.closePopup();  // just comment this
+            this._popup = popup;
+
+            return this.addLayer(popup).fire('popupopen', {
+                popup: this._popup
+            });
+        }
+    }); /***  end of hack ***/
+
+
     var url_georeverse = 'http://nominatim.openstreetmap.org/reverse?format=json&'; // lat=-33.4361132&lon=-70.6300473
-    var url_base_colegios = 'http://data.mineduc.cl/odata/Establecimiento_Matricula/?$format=json&$filter=nombre_comuna%20eq%20';
+    var url_base_colegios = "{{=URL('default','search_schools.json')}}";
     // create a map in the "map" div, set the view to a given place and zoom
     var map = L.map('map').setView([-33.4361132, -70.6300473], 18);
     var GeoLayer = L.layerGroup();
     var GeoColegios = L.layerGroup();
     GeoLayer.addTo(map);
+    GeoColegios.addTo(map);
+
+
 
     // add an OpenStreetMap tile layer
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -75,13 +91,14 @@
 
         GeoLayer.clearLayers();
 
-        L.marker(e.latlng).addTo(GeoLayer).bindPopup('<div id="options-geo-search"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Buscando información cercana ...</div>',{minWidth: 400}).openPopup();
+        var marker = L.marker(e.latlng).addTo(GeoLayer);
+        marker.bindPopup('<div id="options-geo-search"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Buscando información cercana ...</div>',{minWidth: 400}).openPopup();
 
         L.circle(e.latlng, radius).addTo(GeoLayer);
 
         $("div#loader").hide();
-
-        geoSearch(e.latlng);
+        console.log(marker);
+        geoSearch(e.latlng,marker._leaflet_id);
     }
 
     map.on('locationfound', onLocationFound);
@@ -93,7 +110,7 @@
 
     map.on('locationerror', onLocationError);
 
-    function geoSearch(latlng){
+    function geoSearch(latlng,marker_id){
         $.getJSON(url_georeverse+'lat='+latlng.lat+'&lon='+latlng.lng,function(res){
             var direccion = 'ubicación desconocida';
             var comuna = '';
@@ -110,11 +127,13 @@
                 )
                 .append(
                     $('<div/>').addClass('btn-group')
-                        .append($('<button/>').addClass('btn btn-default btn-geo-search').text('Farmacias').data('loading-text','<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Buscando farmacias ...').data('id','btn-farmacias').data('comuna',comuna))
-                        .append($('<button/>').addClass('btn btn-default btn-geo-search').text('Hospitales').data('loading-text','<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Buscando hospitales ...').data('id','btn-hospitales').data('comuna',comuna))
-                        .append($('<button/>').addClass('btn btn-default btn-geo-search').text('Colegios').data('loading-text','<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Buscando colegios ...').data('id','btn-colegios').data('comuna',comuna))
-                        .append($('<button/>').addClass('btn btn-default btn-geo-search').text('Jardines Infantiles').data('loading-text','<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Buscando jardines ...').data('id','btn-jardines').data('comuna',comuna))
+                        .append($('<button/>').addClass('btn btn-default btn-geo-search').text('Farmacias').attr('data-loading-text','<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Buscando farmacias ...').attr('data-id','btn-farmacias').attr('data-comuna',comuna))
+                        .append($('<button/>').addClass('btn btn-default btn-geo-search').text('Hospitales').attr('data-loading-text','<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Buscando hospitales ...').attr('data-id','btn-hospitales').attr('data-comuna',comuna))
+                        .append($('<button/>').addClass('btn btn-default btn-geo-search').text('Colegios').attr('data-loading-text','<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Buscando colegios ...').attr('data-id','btn-colegios').attr('data-comuna',comuna))
+                        .append($('<button/>').addClass('btn btn-default btn-geo-search').text('Jardines Infantiles').attr('data-loading-text','<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Buscando jardines ...').attr('data-id','btn-jardines').attr('data-comuna',comuna))
                 );
+            GeoLayer._layers[marker_id].bindPopup($("#options-geo-search").html(),{minWidth:400}).closePopup();
+
         });
 
     }
@@ -123,14 +142,15 @@
             var that = $(this);
             that.button('loading');
             if(that.data('id')=='btn-colegios'){
-                $.getJSON(url_base_colegios+"'"+that.data('comuna')+"'",function(res){
-                    if(res.d.length>0){
-                        GeoColegios.clearLayers();
-                        $.each(res.d,function(d){
-                            L.marker(e.latlng).addTo(GeoColegios).bindPopup(d.toString(),{minWidth: 400}).openPopup();
-                        });
-                        that.button('reset');
-                    }
+                $.getJSON(url_base_colegios,{'comuna':that.data('comuna')},function(res){
+                    GeoColegios.clearLayers();
+                    var j = 0;
+                    $.each(res.res.d,function(i,d){
+                        if(d.latitud!='0.00000000' && d.longitud!='0.00000000'){
+                            L.marker([d.latitud,d.longitud]).addTo(GeoColegios).bindPopup(d.nombre_establecimiento)
+                        }
+                    });
+                    that.button('reset');
                 })
             }
         });

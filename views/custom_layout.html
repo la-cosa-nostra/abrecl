@@ -40,6 +40,7 @@
   {{
   response.files.insert(0,URL('static','css/web2py.css'))
   response.files.insert(3,URL('static','css/web2py_bootstrap.css'))
+  response.files.insert(3,URL('static','css/main.css'))
   }}
 
   {{include 'web2py_ajax.html'}}
@@ -58,6 +59,7 @@
        uncomment to load jquery-ui //-->
   <noscript><link href="{{=URL('static', 'css/web2py_bootstrap_nojs.css')}}" rel="stylesheet" type="text/css" /></noscript>
   {{block head}}{{end}}
+  <meta name="apple-mobile-web-app-capable" content="yes">
 </head>
 
 <body>
@@ -65,6 +67,7 @@
 
        <div id="wrapper">
 
+        {{if session.sidebar:}}
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
@@ -181,6 +184,7 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
+        {{pass}}
 
         <!-- Page Content -->
         <div id="page-wrapper">

@@ -1,0 +1,18 @@
+<span class="volver_action badge"><i class="glyphicon glyphicon-chevron-left"></i>Volver</span>
+<ul class="list-group opciones">
+    {{for opcion in opciones:}}
+    <li class="list-group-item" data-id="{{=opcion.id}}">
+        <span class="badge"><i class="glyphicon glyphicon-chevron-right"></i></span>
+        {{=opcion.subcat}}
+    </li>
+    {{pass}}
+</ul>
+
+<script>
+    var action = '{{=action}}';
+    $(document).ready(function(){
+        $("#actions").hide();
+        $("#loader").hide();
+        $("#direccion b").append($("<span/>").attr('id','brand-action').html(' / '+action));
+    });
+</script>

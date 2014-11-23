@@ -1,0 +1,15 @@
+<ul class="list-group">
+    {{for opcion in opciones:}}
+    <li class="list-group-item">
+        <span class="badge"><i class="glyphicon glyphicon-chevron-right"></i></span>
+        {{=opcion}}
+    </li>
+    {{pass}}
+</ul>
+
+<script>
+    $(document).ready(function(){
+        $("#actions").hide();
+        $("#loader").hide();
+    });
+</script>
