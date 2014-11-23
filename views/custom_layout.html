@@ -60,12 +60,19 @@
   <noscript><link href="{{=URL('static', 'css/web2py_bootstrap_nojs.css')}}" rel="stylesheet" type="text/css" /></noscript>
   {{block head}}{{end}}
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <style>
+    body{
+        background-color: green;
+        margin: 0;
+        padding:0;
+    }
+  </style>
 </head>
 
 <body>
-  <!--div class="flash">{{=response.flash or ''}}</div-->
-
-       <div id="wrapper">
+    <!--div class="flash">{{=response.flash or ''}}</div-->
+    <div id="wrapper" style="padding:20px 0 0 0; margin: 0;">
 
         {{if session.sidebar:}}
         <!-- Navigation -->
