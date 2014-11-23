@@ -1,7 +1,7 @@
 <span class="volver_action badge"><i class="glyphicon glyphicon-chevron-left"></i>Volver</span>
 <ul class="list-group opciones">
     {{for opcion in opciones:}}
-    <li class="list-group-item" data-id="{{=opcion.id}}">
+    <li class="list-group-item" data-id="{{=opcion.id}}" data-name="{{=opcion.subcat}}">
         <span class="badge"><i class="glyphicon glyphicon-chevron-right"></i></span>
         {{=opcion.subcat}}
     </li>

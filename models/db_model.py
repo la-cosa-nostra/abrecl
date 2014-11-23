@@ -9,9 +9,9 @@ import uuid
 DB = db.define_table
 
 DB('jardines_integra',
-    Field('ano_proceso_asistencia'),
+    Field('anho_proceso_asistencia'),
     Field('mes_proceso_asistencia'),
-    Field('dir_reg'),
+    Field('dire_reg'),
     Field('glosa_comuna'),
     Field('jornada'),
     Field('codigo_jardin'),
@@ -106,3 +106,4 @@ DB('pnac',
     Field('uuid',default=uuid.uuid4(),writable=False,readable=False),
     auth.signature
 )
+

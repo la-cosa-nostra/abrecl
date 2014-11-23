@@ -1,0 +1,42 @@
+<ul class="list-group result-opt">
+    {{for d in dataset:}}
+    <li class="list-group-item" data-id="{{=d.id}}">
+        <span class="badge"><i class="glyphicon glyphicon-chevron-right"></i></span>
+        {{=d.nombre_oficial}}
+    </li>
+    {{pass}}
+</ul>
+
+<script>
+    var action = '{{=action.subcat}}';
+    $(document).ready(function(){
+        $("#actions").hide();
+        $("#loader").hide();
+        $("#direccion b").append($("<span/>").attr('id','brand-sub-action').html(' / '+action));
+        $("#direccion b").append($("<a/>").attr('id','brand-geo-map').addClass('pull-right').html('<i class="glyphicon glyphicon-globe"></i>'));
+
+        $("#direccion i.glyphicon-globe").on('click',function(){
+            $(".result-opt").hide();
+            $("#map").css({
+                'width':'auto',
+                'height':'auto',
+                'bottom':0,
+                'top':'40px',
+                'right':0,
+                'left':0
+            });
+            map.invalidateSize();
+            markers();
+        })
+
+        function markers(){
+            L.marker([-33.42548394,-70.61112644]).addTo(map).bindPopup('Informacion Centro').openPopup();
+            L.marker([-33.43186377,-70.60177919]).addTo(map).bindPopup('Informacion Centro').openPopup();
+            L.marker([-33.44642755,-70.63021039]).addTo(map).bindPopup('Informacion Centro').openPopup();
+            L.marker([-33.42418757,-70.61372669]).addTo(map).bindPopup('Informacion Centro').openPopup();
+            L.marker([-33.44347901,-70.62536825]).addTo(map).bindPopup('Informacion Centro').openPopup();
+            L.marker([-33.42993750,-70.62162017]).addTo(map).bindPopup('Informacion Centro').openPopup();
+            L.marker([-33.41779241,-70.60081590]).addTo(map).bindPopup('Informacion Centro').openPopup();
+        }
+    });
+</script>

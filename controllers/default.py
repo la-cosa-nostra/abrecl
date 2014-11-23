@@ -109,11 +109,17 @@ def action_menu():
     return dict(opciones=opciones,action=action)
 
 def action_submenu():
-    action = request.vars.action or False
+    action = db.menu_abrecl(request.vars.action) or False
 
-    opciones = []
+    opciones = ['Programa Nacional de Alimentación Complementaria','Jardines Integra']
 
-    return dict(opciones=opciones,action=action)
+    if action:
+        if action.subcat==opciones[0]:
+            redirect(URL('pnac','index.load',vars=request.vars))
+        else:
+            return 'invalid request'
+    else:
+        return 'invalid request'
 
 
 def admin():

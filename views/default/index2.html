@@ -72,21 +72,21 @@
 <div id="actions">
     <div class="row">
         <div class="col-xs-4 col-md-4 action" data-id="salud">
-            <a href="#" class="thumbnail">
+            <a href="javascript:;" class="thumbnail">
                 <i class="glyphicon glyphicon-info-sign"></i> <br>
                 Salud
             </a>
         </div>
 
         <div class="col-xs-4 col-md-4 action" data-id="educacion">
-            <a href="#" class="thumbnail">
+            <a href="javascript:;" class="thumbnail">
                 <i class="glyphicon glyphicon-info-sign"></i> <br>
                 Educación
             </a>
         </div>
 
         <div class="col-xs-4 col-md-4 action" data-id="seguridad">
-            <a href="#" class="thumbnail">
+            <a href="javascript:;" class="thumbnail">
                 <i class="glyphicon glyphicon-info-sign"></i> <br>
                 Seguridad
             </a>
@@ -95,21 +95,21 @@
 
     <div class="row">
         <div class="col-xs-4 col-md-4 action" data-id="sociedad">
-            <a href="#" class="thumbnail">
+            <a href="javascript:;" class="thumbnail">
                 <i class="glyphicon glyphicon-info-sign"></i> <br>
                 Sociedad
             </a>
         </div>
 
         <div class="col-xs-4 col-md-4 action" data-id="familia">
-            <a href="#" class="thumbnail">
+            <a href="javascript:;" class="thumbnail">
                 <i class="glyphicon glyphicon-info-sign"></i> <br>
                 Familia
             </a>
         </div>
 
         <div class="col-xs-4 col-md-4 action" data-id="turismo">
-            <a href="#" class="thumbnail">
+            <a href="javascript:;" class="thumbnail">
                 <i class="glyphicon glyphicon-info-sign"></i> <br>
                 Turismo
             </a>
@@ -118,21 +118,21 @@
 
     <div class="row">
         <div class="col-xs-4 col-md-4 action" data-id="tramites">
-            <a href="#" class="thumbnail">
+            <a href="javascript:;" class="thumbnail">
                 <i class="glyphicon glyphicon-info-sign"></i> <br>
                 Trámites
             </a>
         </div>
 
         <div class="col-xs-4 col-md-4 action" data-id="energia">
-            <a href="#" class="thumbnail">
+            <a href="javascript:;" class="thumbnail">
                 <i class="glyphicon glyphicon-info-sign"></i> <br>
                 Energia
             </a>
         </div>
 
         <div class="col-xs-4 col-md-4 action" data-id="negocios">
-            <a href="#" class="thumbnail">
+            <a href="javascript:;" class="thumbnail">
                 <i class="glyphicon glyphicon-info-sign"></i> <br>
                 Negocios
             </a>
@@ -141,6 +141,7 @@
 </div>
 
 <div id="response"></div>
+<div id="process"></div>
 
 {{block js}}
 <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
@@ -168,13 +169,15 @@
     geoLocate();
 
     function onLocationFound(e) {
-        // var radius = e.accuracy / 2;
-        // // console.info(e.latlng);
+        var radius = e.accuracy / 2;
+        // console.info(e.latlng);
 
-        // GeoLayer.clearLayers();
+        GeoLayer.clearLayers();
 
-        // var marker = L.marker(e.latlng).addTo(GeoLayer);
-        // marker.bindPopup('<div id="options-geo-search"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Buscando información cercana ...</div>',{minWidth: 400}).openPopup();
+        var marker = L.marker(e.latlng).addTo(GeoLayer);
+        marker.bindPopup('Tu estás aquí',{minWidth: 200}).openPopup();
+
+        // <div id="options-geo-search"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Buscando información cercana ...</div>
 
         // L.circle(e.latlng, radius).addTo(GeoLayer);
 
@@ -195,7 +198,7 @@
     function geoSearch(latlng,marker_id){
         $.getJSON(url_georeverse+'lat='+latlng.lat+'&lon='+latlng.lng,function(res){
             var direccion = 'ubicación desconocida';
-            var comuna = '';
+            var comuna = 'ubicación desconocida';
             if(res.display_name!=undefined){
                 direccion = res.display_name;
             }
@@ -204,7 +207,7 @@
             }
             console.info('buscando información ...');
             $("#direccion").empty()
-                .append($('<div/>').html('<b>Estás en : '+comuna+'</b>'))
+                .append($('<div/>').html('<b>Estás en : <span>'+comuna+'</span></b>'))
                 .data('georeverse',res.toString());
 
             $("div#loader").hide();
@@ -227,7 +230,29 @@
             $("#brand-action").remove();
             $("#actions").show();
 
+        }).on('click','.opciones>li',function(){
+            var opcion = $(this);
+            var url_action = "{{=URL('default','action_submenu.load')}}";
+            if(opciones_disponibles(opcion.data('name'))){
+                $("#response").hide();
+                $("#loader #text-loader").html(opcion.data('name'));
+                $("#loader").show();
+                url_action = url_action+'?action='+opcion.data('id')+'&comuna='+$("#direccion b>span:first").text();
+                web2py_component(url_action,'process');
+            } else{
+                alert('Soon...');
+            }
         });
+
+        function opciones_disponibles(opcion){
+            var opciones = ['Programa Nacional de Alimentación Complementaria','Jardines Integra'];
+            for(i=0; i<opciones.length; i++){
+                if(opcion==opciones[i]){
+                    return true;
+                }
+            }
+            return false;
+        }
     })
 </script>
 {{end}}
