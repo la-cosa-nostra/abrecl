@@ -1,3 +1,5 @@
+<input type="search" placeholder="Buscar ..." class="form-control col-sm-12">
+<div class="clearfix"></div>
 <ul class="list-group result-opt">
     {{for d in dataset:}}
     <li class="list-group-item" data-id="{{=d.id}}">
@@ -6,6 +8,7 @@
     </li>
     {{pass}}
 </ul>
+<div id="view-form"></div>
 
 <script>
     var action = '{{=action.subcat}}';
@@ -38,5 +41,11 @@
             L.marker([-33.42993750,-70.62162017]).addTo(map).bindPopup('Informacion Centro').openPopup();
             L.marker([-33.41779241,-70.60081590]).addTo(map).bindPopup('Informacion Centro').openPopup();
         }
+
+        $("ul.result-opt >li").on('click',function(){
+            var url_action = "{{=URL('pnac','view.load')}}"+'/'+$(this).data('id');
+            $(".result-opt").hide();
+            web2py_component(url_action,'view-form');
+        })
     });
 </script>
