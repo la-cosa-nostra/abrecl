@@ -1,0 +1,26 @@
+<div id="page-content">
+    <span class="volver_action badge"><i class="glyphicon glyphicon-chevron-left"></i>Volver</span>
+    <ul class="list-group opciones">
+        {{for opcion in opciones:}}
+        <li class="list-group-item" data-id="{{=opcion.id}}" data-name="{{=opcion.subcat}}">
+            <span class="badge"><i class="glyphicon glyphicon-chevron-right"></i></span>
+            {{=opcion.subcat}}
+        </li>
+        {{pass}}
+    </ul>
+</div>
+
+<script>
+    var action = '{{=action}}';
+    $(document).ready(function(){
+        var size = size_window();
+        $("#page-content").css('min-height',(size.height-100).toString()+'px');
+        $(".navigation").hide();
+        $("#loader").hide();
+        $("#direccion b").append($("<span/>").attr('id','brand-menu-action').html(' / Sub-categorias'));
+    });
+    window.onresize = function(event) {
+        var size = size_window();
+        $("#page-content").css('min-height',(size.height-100).toString()+'px');
+    };
+</script>

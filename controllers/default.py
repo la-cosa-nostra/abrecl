@@ -10,17 +10,11 @@
 #########################################################################
 
 def index():
-    """
-    example action using the internationalization operator T and flash
-    rendered by views/default/index.html or views/generic.html
 
-    if you need a simple wiki simply replace the two lines below with:
-    return auth.wiki()
-    """
-    response.flash = T("Welcome to web2py!")
-    return dict(message=T('Hello World'))
+    return dict()
 
 def index2():
+    redirect(URL('index'))
     return dict()
 
 
@@ -80,7 +74,63 @@ def search_schools():
     res = requests.get(url_colegios)
     return dict(res=res.json())
 
-def action_menu():
+def beneficios():
+    action = request.vars.action or False
+
+    opciones = []
+
+    if action=='salud':
+        titulo = 'titulo a mostrar para categoria salud'
+    elif action=='educacion':
+        titulo = 'titulo a mostrar para categoria educacion'
+    elif action=='seguridad':
+        titulo = 'titulo a mostrar para categoria seguridad'
+    elif action=='sociedad':
+        titulo = 'titulo a mostrar para categoria sociedad'
+    elif action=='familia':
+        titulo = 'titulo a mostrar para categoria familia'
+    elif action=='turismo':
+        titulo = 'titulo a mostrar para categoria turismo'
+    elif action=='tramites':
+        titulo = 'titulo a mostrar para categoria tramites'
+    elif action=='energia':
+        titulo = 'titulo a mostrar para categoria energia'
+    elif action=='negocios':
+        titulo = 'titulo a mostrar para categoria negocios'
+    else:
+        return 'request invalid'
+
+    return dict(titulo=titulo,action=action)
+
+def buscar():
+    action = request.vars.action or False
+
+    opciones = []
+
+    if action=='salud':
+        titulo = 'titulo a mostrar para categoria salud'
+    elif action=='educacion':
+        titulo = 'titulo a mostrar para categoria educacion'
+    elif action=='seguridad':
+        titulo = 'titulo a mostrar para categoria seguridad'
+    elif action=='sociedad':
+        titulo = 'titulo a mostrar para categoria sociedad'
+    elif action=='familia':
+        titulo = 'titulo a mostrar para categoria familia'
+    elif action=='turismo':
+        titulo = 'titulo a mostrar para categoria turismo'
+    elif action=='tramites':
+        titulo = 'titulo a mostrar para categoria tramites'
+    elif action=='energia':
+        titulo = 'titulo a mostrar para categoria energia'
+    elif action=='negocios':
+        titulo = 'titulo a mostrar para categoria negocios'
+    else:
+        return 'request invalid'
+
+    return dict(titulo=titulo,action=action)
+
+def subcats():
     action = request.vars.action or False
 
     opciones = []

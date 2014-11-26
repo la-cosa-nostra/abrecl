@@ -1,0 +1,36 @@
+<div id="page-content">
+    <span class="volver_action badge"><i class="glyphicon glyphicon-chevron-left"></i>Volver</span>
+
+    <div class="row">
+        <div class="col-sm-12" style="text-align: center">
+            <h4>Mis Beneficios</h4>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-sm-12" style="text-align: center">
+            <h4>Beneficios para mi familia</h4>
+        </div>
+    </div>
+
+    <div class="row" style="position:absolute; bottom:5px; left:20px; right:20px; border: 1px solid #ddd;">
+        <div class="col-sm-12" style="text-align: center">
+            <h4>Gob Ads</h4>
+        </div>
+    </div>
+</div>
+
+<script>
+    var action = '{{=action}}';
+    $(document).ready(function(){
+        var size = size_window();
+        $("#page-content").css('min-height',(size.height-100).toString()+'px');
+        $(".navigation").hide();
+        $("#loader").hide();
+        $("#direccion b").append($("<span/>").attr('id','brand-menu-action').html(' / Beneficios'));
+    });
+    window.onresize = function(event) {
+        var size = size_window();
+        $("#page-content").css('min-height',(size.height-100).toString()+'px');
+    };
+</script>

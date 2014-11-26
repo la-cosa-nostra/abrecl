@@ -1,0 +1,27 @@
+<div id="page-content">
+    <span class="volver_action badge"><i class="glyphicon glyphicon-chevron-left"></i>Volver</span>
+
+    <div style="text-align: center">
+        {{=titulo}}
+        <hr>
+        <form action="{{=URL('datos','buscar.load')}}" method="post">
+            <input type="text" name="query" placeholder='¿Qué quieres encontrar?' class="form-control"> <br>
+            <input type="submit" class="btn btn-default" value="Buscar en {{=action}}">
+        </form>
+    </div>
+</div>
+
+<script>
+    var action = '{{=action}}';
+    $(document).ready(function(){
+        var size = size_window();
+        $("#page-content").css('min-height',(size.height-100).toString()+'px');
+        $(".navigation").hide();
+        $("#loader").hide();
+        $("#direccion b").append($("<span/>").attr('id','brand-menu-action').html(' / Buscar'));
+    });
+    window.onresize = function(event) {
+        var size = size_window();
+        $("#page-content").css('min-height',(size.height-100).toString()+'px');
+    };
+</script>
