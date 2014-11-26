@@ -16,7 +16,7 @@
         /*display: none;*/
     }
     div#loader{
-        /*display: none;*/
+        display: none;
         position:fixed;
         top: 0;
         left: 0;
@@ -40,14 +40,25 @@
         from { transform: scale(1) rotate(0deg);}
         to { transform: scale(1) rotate(360deg);}
     }
-    #actions{
+    .actions-menu{
         text-align: center;
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+        -o-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-transition: -webkit-transform 400ms ease;
+        -moz-transition: -moz-transform 400ms ease;
+        -o-transition: -o-transform 400ms ease;
+        transition: transform 400ms ease;
+        -webkit-overflow-scrolling: touch;
+        overflow-y: scroll;
     }
 
-    #actions i{
+    .actions-menu i{
         font-size: 50px;
     }
-    #actions a{
+    .actions-menu a{
         text-decoration: none;
     }
     #brand-action{
@@ -59,6 +70,47 @@
     ul.opciones li{
         cursor: pointer;
     }
+    #actions{
+        position: relative;
+        width: 100%;
+        top:0;
+        left: 0;
+        -webkit-transform: translate3d(0, 0, 0);
+        -moz-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+        -o-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+    .nav-open #actions{
+        -webkit-transform: translate3d(-150%, 0, 0);
+        -moz-transform: translate3d(-150%, 0, 0);
+        -ms-transform: translate3d(-150%, 0, 0);
+        -o-transform: translate3d(-150%, 0, 0);
+        transform: translate3d(-150%, 0, 0);
+    }
+    #step2{
+        position: absolute;
+        top:100px;
+        right:0;
+        width: 100%;
+        -webkit-transform: translate3d(-150%, 0, 0);
+        -moz-transform: translate3d(-150%, 0, 0);
+        -ms-transform: translate3d(-150%, 0, 0);
+        -o-transform: translate3d(-150%, 0, 0);
+        transform: translate3d(-150%, 0, 0);
+    }
+    .nav-open #step2{
+        -webkit-transform: translate3d(0, 0, 0);
+        -moz-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+        -o-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+    .navigation .row{
+        margin:0!important;
+    }
+
  </style>
 {{end}}
 <div id="map" style="width:0px;height:0px;position:fixed;bottom:0;right:0;"></div>
@@ -66,75 +118,101 @@
     <div style="color: white;text-align: center;margin-top: 10%;font-size: 50px;"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> <br> <span id="text-loader">Geolocalizando</span></div>
 </div>
 
-<div id="direccion"><div id="geo-locate" onclick="javascript:geoLocate();">Mi ubicación</div></div>
+<div id="direccion" style="height: 50px"><div id="geo-locate" onclick="javascript:geoLocate();">Mi ubicación</div></div>
+<div class="navigation" style="overflow-x:hidden">
+    <div class="actions-menu" id="actions">
+        <div class="row">
+            <div class="col-xs-4 col-md-4 action" data-id="salud">
+                <a href="javascript:;" class="thumbnail">
+                    <i class="glyphicon glyphicon-info-sign"></i> <br>
+                    Salud
+                </a>
+            </div>
 
-<div id="actions">
-    <div class="row">
-        <div class="col-xs-4 col-md-4 action" data-id="salud">
-            <a href="javascript:;" class="thumbnail">
-                <i class="glyphicon glyphicon-info-sign"></i> <br>
-                Salud
-            </a>
+            <div class="col-xs-4 col-md-4 action" data-id="educacion">
+                <a href="javascript:;" class="thumbnail">
+                    <i class="glyphicon glyphicon-info-sign"></i> <br>
+                    Educación
+                </a>
+            </div>
+
+            <div class="col-xs-4 col-md-4 action" data-id="seguridad">
+                <a href="javascript:;" class="thumbnail">
+                    <i class="glyphicon glyphicon-info-sign"></i> <br>
+                    Seguridad
+                </a>
+            </div>
         </div>
 
-        <div class="col-xs-4 col-md-4 action" data-id="educacion">
-            <a href="javascript:;" class="thumbnail">
-                <i class="glyphicon glyphicon-info-sign"></i> <br>
-                Educación
-            </a>
+        <div class="row">
+            <div class="col-xs-4 col-md-4 action" data-id="sociedad">
+                <a href="javascript:;" class="thumbnail">
+                    <i class="glyphicon glyphicon-info-sign"></i> <br>
+                    Sociedad
+                </a>
+            </div>
+
+            <div class="col-xs-4 col-md-4 action" data-id="familia">
+                <a href="javascript:;" class="thumbnail">
+                    <i class="glyphicon glyphicon-info-sign"></i> <br>
+                    Familia
+                </a>
+            </div>
+
+            <div class="col-xs-4 col-md-4 action" data-id="turismo">
+                <a href="javascript:;" class="thumbnail">
+                    <i class="glyphicon glyphicon-info-sign"></i> <br>
+                    Turismo
+                </a>
+            </div>
         </div>
 
-        <div class="col-xs-4 col-md-4 action" data-id="seguridad">
-            <a href="javascript:;" class="thumbnail">
-                <i class="glyphicon glyphicon-info-sign"></i> <br>
-                Seguridad
-            </a>
+        <div class="row">
+            <div class="col-xs-4 col-md-4 action" data-id="tramites">
+                <a href="javascript:;" class="thumbnail">
+                    <i class="glyphicon glyphicon-info-sign"></i> <br>
+                    Trámites
+                </a>
+            </div>
+
+            <div class="col-xs-4 col-md-4 action" data-id="energia">
+                <a href="javascript:;" class="thumbnail">
+                    <i class="glyphicon glyphicon-info-sign"></i> <br>
+                    Energia
+                </a>
+            </div>
+
+            <div class="col-xs-4 col-md-4 action" data-id="negocios">
+                <a href="javascript:;" class="thumbnail">
+                    <i class="glyphicon glyphicon-info-sign"></i> <br>
+                    Negocios
+                </a>
+            </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xs-4 col-md-4 action" data-id="sociedad">
-            <a href="javascript:;" class="thumbnail">
-                <i class="glyphicon glyphicon-info-sign"></i> <br>
-                Sociedad
-            </a>
-        </div>
+    <div class="actions-menu" id="step2">
+        <div class="row">
+            <div class="col-xs-12 col-md-12 action" data-id="beneficios">
+                <a href="javascript:;" class="thumbnail">
+                    <i class="glyphicon glyphicon-thumbs-up"></i> <br>
+                    Beneficios
+                </a>
+            </div>
 
-        <div class="col-xs-4 col-md-4 action" data-id="familia">
-            <a href="javascript:;" class="thumbnail">
-                <i class="glyphicon glyphicon-info-sign"></i> <br>
-                Familia
-            </a>
-        </div>
+            <div class="col-xs-12 col-md-12 action" data-id="buscar">
+                <a href="javascript:;" class="thumbnail">
+                    <i class="glyphicon glyphicon-search"></i> <br>
+                    Buscar
+                </a>
+            </div>
 
-        <div class="col-xs-4 col-md-4 action" data-id="turismo">
-            <a href="javascript:;" class="thumbnail">
-                <i class="glyphicon glyphicon-info-sign"></i> <br>
-                Turismo
-            </a>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-4 col-md-4 action" data-id="tramites">
-            <a href="javascript:;" class="thumbnail">
-                <i class="glyphicon glyphicon-info-sign"></i> <br>
-                Trámites
-            </a>
-        </div>
-
-        <div class="col-xs-4 col-md-4 action" data-id="energia">
-            <a href="javascript:;" class="thumbnail">
-                <i class="glyphicon glyphicon-info-sign"></i> <br>
-                Energia
-            </a>
-        </div>
-
-        <div class="col-xs-4 col-md-4 action" data-id="negocios">
-            <a href="javascript:;" class="thumbnail">
-                <i class="glyphicon glyphicon-info-sign"></i> <br>
-                Negocios
-            </a>
+            <div class="col-xs-12 col-md-12 action" data-id="subcategorias">
+                <a href="javascript:;" class="thumbnail">
+                    <i class="glyphicon glyphicon-align-justify"></i> <br>
+                    Sub-categorias
+                </a>
+            </div>
         </div>
     </div>
 </div>
@@ -165,7 +243,7 @@
         $("div#loader").show();
         map.locate({setView: true, maxZoom: 18});
     }
-    geoLocate();
+    // geoLocate();
 
     function onLocationFound(e) {
         var radius = e.accuracy / 2;
