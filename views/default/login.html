@@ -1,31 +1,34 @@
 {{extend 'custom_layout.html'}}
-
 <h4 style="text-align:center"><img src="http://abrecl.datos.gob.cl/img/abrecl_LOGO.png" alt="ABRECL"></h4>
 
-<form class="form-horizontal" role="form">
-  <div class="form-group">
-    <div class="col-sm-12">
-      <input type="text" class="form-control col-sm-12" id="inputEmail3" placeholder="Correo Electronico">
+<form class="form-horizontal" role="form" style="padding: 5px" method="post" action="{{=URL('default','user',args='login',vars=request.vars)}}">
+    <div class="form-group">
+        <div class="col-sm-12">
+            {{form.custom.widget.email['_class']='form-control '+form.custom.widget.email['_class']}}
+            {{form.custom.widget.email['_placeholder']='Correo Electronico'}}
+            {{=form.custom.widget.email}}
+        </div>
     </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-12">
-      <input type="password" class="form-control col-sm-12" id="inputPassword3" placeholder="Contraseña">
+    <div class="form-group">
+        <div class="col-sm-12">
+            {{form.custom.widget.password['_class']='form-control '+form.custom.widget.password['_class']}}
+            {{form.custom.widget.password['_placeholder']='Contraseña'}}
+            {{=form.custom.widget.password}}
+        </div>
     </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <div class="checkbox">
-        <label>
-          <input type="checkbox"> Recordar mi cuenta
-        </label>
-      </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+                <label>
+                    {{=form.custom.widget.remember_me}} Recordar mi cuenta
+                </label>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-success">Ingresar</button>
-      <a href="{{=URL('default','paso1')}}">Registrate!</a>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-block btn-success">Ingresa!</button>
+            <a href="{{=URL('default','paso1')}}" class="btn btn-block btn-danger">Registrate!</a>
+        </div>
     </div>
-  </div>
-</form>
+{{=form.custom.end}}

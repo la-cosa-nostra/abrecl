@@ -270,7 +270,7 @@ def generate_latlon():
                 k+=1
                 print e
 
-    print k
+    # print k
     return k
 
 # generate_latlon()

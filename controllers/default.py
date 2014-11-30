@@ -9,6 +9,7 @@
 ## - api is an example of Hypermedia API support and access control
 #########################################################################
 
+@auth.requires_login()
 def index():
 
     return dict()
@@ -33,6 +34,8 @@ def user():
         @auth.requires_permission('read','table name',record_id)
     to decorate functions that need access control
     """
+    if request.args(0)=='login':
+        response.view = 'default/login.html'
     return dict(form=auth())
 
 

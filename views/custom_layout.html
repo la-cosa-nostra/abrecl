@@ -81,6 +81,9 @@
         width: 60%;
         height: 50px;
         background-color: #ee4144;
+        color:white;
+        padding: 20px 5px;
+        text-align: right;
     }
     #wrapper{
         overflow-x: hidden!important;
@@ -92,8 +95,16 @@
 </head>
 <body>
     <div class="ios-topbar" style="height:50px;">
-        <div id="chile-logo-right"></div>
-        <a href="#" style="line-height:3.5em; margin-left:5px;color:#fff; font-size:1.1em;" class="volver_action"><i class="fa fa-chevron-circle-left fa-2x"></i></a>
+        <div id="chile-logo-right">
+          {{if auth.user:}}
+            {{=auth.user.first_name}} {{=auth.user.last_name}}
+            (<a href="{{=URL('default','user',args='logout')}}">salir</a>)
+          {{pass}}
+        </div>
+        <div style="padding-top:10px:">
+          <a href="#" style="line-height:3.5em; margin-left:5px;color:#fff; display:none; font-size:1.1em;" class="volver_index"><i class="fa fa-chevron-circle-left fa-2x"></i></a>
+        </div>
+
     </div>
     <div id="wrapper">
         {{include}}

@@ -284,7 +284,7 @@
             }
             console.info('buscando información ...');
             $("#direccion").empty()
-                .append($('<div/>').html('<b><span>'+comuna+'</span></b>'))
+                .append($('<div/>').html('<b><span>'+comuna+'</span></b>').css('padding','15px'))
                 .data('georeverse',res.toString());
 
             $("div#loader").hide();
@@ -292,10 +292,20 @@
 
     }
     $(document).ready(function(){
+        $(".volver_index").on('click',function(){
+            $("#brand-action, #brand-menu-action, #brand-sub-action, #brand-geo-map").remove();
+            $("#response, #process").empty().show();
+            $("#map").css({'width':'0px','height':'0px','position':'fixed','bottom':'0','right':'0'});
+            $(".navigation").show();
+            $(".navigation").removeClass('nav-open');
+            $(".volver_index").hide();
+        });
+
         $("#actions").find('.action').on('click',function(){
             var action = $(this);
             $("#direccion b").append($("<span/>").attr('id','brand-action').html(' / '+action.data('id')).data('comuna',action.data('id')).data('action',action.data('id')));
             $(".navigation").addClass('nav-open');
+            $(".volver_index").show();
         });
         $("#step2").find('.action').on('click',function(){
             var action = $(this);

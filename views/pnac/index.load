@@ -1,4 +1,4 @@
-<input type="search" placeholder="Buscar ..." class="form-control col-sm-12">
+<input type="search" placeholder="Filtrar ..." class="form-control col-sm-12">
 <div class="clearfix"></div>
 <ul class="list-group result-opt">
     {{for d in dataset:}}
@@ -13,7 +13,6 @@
 <script>
     var action = '{{=action.subcat}}';
     $(document).ready(function(){
-        $("#actions").hide();
         $("#loader").hide();
         $("#direccion b").append($("<span/>").attr('id','brand-sub-action').html(' / '+action));
         $("#direccion b").append($("<a/>").attr('id','brand-geo-map').addClass('pull-right').html('<i class="glyphicon glyphicon-globe"></i>'));

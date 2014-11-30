@@ -252,7 +252,7 @@ div.controls .error {
     margin-right:-10px;
   }
   input[type="text"],input[type="password"],select{
-    width:95%;
+    width:100%;
   }
 }
 
