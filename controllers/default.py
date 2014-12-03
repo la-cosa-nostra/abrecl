@@ -169,6 +169,8 @@ def action_submenu():
     if action:
         if action.subcat==opciones[0]:
             redirect(URL('pnac','index.load',vars=request.vars))
+        elif action.subcat==opciones[1]:
+            redirect(URL('escuelas','index.load',vars=request.vars))
         else:
             return 'invalid request'
     else:

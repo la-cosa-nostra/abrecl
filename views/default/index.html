@@ -280,7 +280,7 @@
                 direccion = res.display_name;
             }
             if(res.address!=undefined){
-                comuna = res.address.suburb;
+                comuna = res.address.city?res.address.city:res.address.town;
             }
             console.info('buscando información ...');
             $("#direccion").empty()
