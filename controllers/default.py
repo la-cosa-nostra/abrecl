@@ -46,9 +46,16 @@ def familia():
     db.familia.amamantando.show_if = (db.familia.sexo=='Femenino')
     db.familia.prevision.show_if = (db.familia.carga==False)
 
-    form = SQLFORM(db.familia)
+    form = SQLFORM(db.familia,formstyle='divs')
 
-    return dict(form=form)
+    if form.process().accepted:
+        response.flash = 'Familiar agregado'
+    elif form.errors:
+        response.flash = 'Errores en el formulario'
+
+    dataset = db(db.familia.user_id==auth.user.id).select()
+
+    return dict(form=form,dataset=dataset)
 
 @cache.action()
 def download():

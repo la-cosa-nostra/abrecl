@@ -1,13 +1,30 @@
 {{extend 'custom_layout.html'}}
-<h4 style="text-align:center">Familiares</h4>
-<div class="col-sm-12">
+<h4 style="text-align:center"><a href="{{=URL('default','user.html/profile')}}" class="btn btn-default">Mi Perfil</a> - <a href="{{=URL('default','familia.html')}}" class="btn btn-primary">Familiares</a></h4>
+<hr>
+<a href="#" class="btn btn-info btn-block agregar"><i class="glyphicon glyphicon-plus"></i>Agregar Familiar</a>
+<div class="col-sm-12 hide form-new-familiar">
     {{=form}}
+</div>
+
+<hr>
+<div class="col-sm-12">
+    <h6>Agregados anteriormente</h6>
+    {{for d in dataset:}}
+    <ul class="list-group">
+        <li class="list-group-item">{{=d.nombre}} - {{=d.fecha_nacimiento}}</li>
+    </ul>
+    {{pass}}
 </div>
 
 {{block js}}
 <script>
     $(document).ready(function(){
         $("input,select,checkbox").addClass('form-control');
+        $('input[type=submit]').addClass('btn btn-success');
+
+        $(".agregar").on('click',function(){
+            $(".form-new-familiar").toggleClass('hide');
+        })
     })
 </script>
 {{end}}
