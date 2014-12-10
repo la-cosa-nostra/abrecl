@@ -17,7 +17,7 @@ td {vertical-align:top}
 form table tr td label {text-align:left}
 p,table,ol,ul {padding:0; margin: 0.75em 0}
 p {text-align:justify}
-ol, ul {list-style-position:outside; margin-left:2em}
+/*ol, ul {list-style-position:outside; margin-left:2em}*/
 li {margin-bottom:0.5em}
 span,input,select,textarea,button,label,a {display:inline}
 img {border:0}
