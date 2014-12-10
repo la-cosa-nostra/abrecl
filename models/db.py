@@ -84,6 +84,8 @@ auth.define_tables(username=False, signature=False)
 db.auth_user.embarazada.show_if = (db.auth_user.sexo=='Femenino')
 db.auth_user.amamantando.show_if = (db.auth_user.sexo=='Femenino')
 
+auth.settings.formstyle = 'divs'
+
 if request.controller=='default' and request.function=='user' and request.args(0)=='profile':
     db.auth_user.email.writable=False
     db.auth_user.email.readable=False
