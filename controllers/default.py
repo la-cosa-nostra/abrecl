@@ -38,6 +38,8 @@ def user():
         response.view = 'default/login.html'
     elif request.args(0)=='profile':
         response.view = 'default/profile.html'
+    elif request.args(0)=='register':
+        response.view = 'default/register.html'
     return dict(form=auth())
 
 @auth.requires_login()

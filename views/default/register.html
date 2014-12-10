@@ -1,0 +1,15 @@
+{{extend 'custom_layout.html'}}
+<h4 style="text-align:center"><a href="#" class="btn btn-primary">Registro</a></h4>
+<hr>
+<div class="col-sm-12">
+    {{=form}}
+</div>
+
+{{block js}}
+<script>
+    $(document).ready(function(){
+        $("input,select,checkbox").addClass('form-control');
+        $("input[type=submit]").addClass('btn btn-success');
+    })
+</script>
+{{end}}
