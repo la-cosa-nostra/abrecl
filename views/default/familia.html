@@ -9,13 +9,18 @@
 <hr>
 <div class="col-sm-12">
     <h6>Agregados anteriormente</h6>
+    {{if dataset:}}
     {{for d in dataset:}}
     <ul class="list-group">
         <li class="list-group-item">{{=d.nombre}} - {{=d.fecha_nacimiento}}</li>
     </ul>
     {{pass}}
+    {{else:}}
+    <h6>Ninguno</h6>
+    {{pass}}
 </div>
-
+<div class="clearfix"></div>
+<hr>
 {{block js}}
 <script>
     $(document).ready(function(){
