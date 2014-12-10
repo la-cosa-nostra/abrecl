@@ -164,13 +164,15 @@ def subcats():
 def action_submenu():
     action = db.menu_abrecl(request.vars.action) or False
 
-    opciones = ['Programa Nacional de Alimentación Complementaria','Jardines Integra']
+    opciones = ['Programa Nacional de Alimentación Complementaria','Jardines Integra','Colegios, Escuelas y Liceos']
 
     if action:
         if action.subcat==opciones[0]:
             redirect(URL('pnac','index.load',vars=request.vars))
         elif action.subcat==opciones[1]:
-            redirect(URL('escuelas','index.load',vars=request.vars))
+            redirect(URL('escuelas','jardines_integra.load',vars=request.vars))
+        elif action.subcat==opciones[2]:
+            redirect(URL('escuelas','colegios.load',vars=request.vars))
         else:
             return 'invalid request'
     else:

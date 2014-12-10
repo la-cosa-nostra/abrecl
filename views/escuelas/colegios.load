@@ -1,0 +1,79 @@
+<div id="colegios">
+    <input type="text" autofocus placeholder="Filtrar ..." class="form-control col-sm-12 search">
+    <button class="sort" data-sort="name">
+    Ordernar por Nombre
+    </button>
+    <div class="clearfix"></div>
+    <ul class="list-group result-opt list">
+        {{for d in res:}}
+        <!-- "agno": "2014",
+"rbd": 4702,
+"nombre_establecimiento": "LICEO ALMTE.PEDRO ESPINA RITCHIE",
+"nombre_comuna": "TALCAHUANO",
+"nombre_deprov": "Concepcion",
+"nombre_region": "DEL BIOB?O",
+"numero_region": "8",
+"dependencia": "Municipal",
+"area_geografica": "Urbano",
+"estado": "Funcionando",
+"latitud": "-36.71855513",
+"longitud": "-73.10870773",
+"numero_alumnos": 1391 -->
+        <li class="list-group-item" data-id="{{=d['rbd']}}" data-nombre="{{=d[u'nombre_establecimiento']}}" data-dependencia="{{=d[u'dependencia']}}" data-area-geografica="{{=d[u'area_geografica']}}" data-alumnos="{{=d[u'numero_alumnos']}}" data-lat="{{=d[u'latitud']}}" data-lon="{{=d[u'longitud']}}" data-comuna="{{=d[u'nombre_comuna']}}" data-region="{{=d[u'nombre_region']}}" data-provincia="{{=d[u'nombre_deprov']}}" data-estado="{{=d[u'estado']}}" data-agno="{{=d[u'agno']}}">
+            <span class="badge"><i class="glyphicon glyphicon-chevron-right"></i></span>
+            <span class="name">{{=d[u'nombre_establecimiento']}}</span>
+            <span class="dependencia label label-info">{{=d[u'dependencia']}}</span>
+        </li>
+        {{pass}}
+    </ul>
+    <ul class="pagination"></ul>
+</div>
+<div id="view-form"></div>
+
+{{block js}}
+<script>
+    var action = '{{=action.subcat}}';
+    $(document).ready(function(){
+        $("#loader").hide();
+        $("#direccion b").append($("<span/>").attr('id','brand-sub-action').html(' / '+action));
+        $("#direccion b").append($("<a/>").attr('id','brand-geo-map').addClass('pull-right').html('<i class="glyphicon glyphicon-globe"></i>'));
+
+        $("#direccion i.glyphicon-globe").on('click',function(){
+            $("#colegios,#view-form").hide();
+            $("#map").css({
+                'width':'auto',
+                'height':'auto',
+                'bottom':0,
+                'top':'40px',
+                'right':0,
+                'left':0
+            });
+            map.invalidateSize();
+            markers();
+        })
+
+        function markers(){
+            L.marker([-33.42548394,-70.61112644]).addTo(map).bindPopup('Informacion Centro').openPopup();
+            L.marker([-33.43186377,-70.60177919]).addTo(map).bindPopup('Informacion Centro').openPopup();
+            L.marker([-33.44642755,-70.63021039]).addTo(map).bindPopup('Informacion Centro').openPopup();
+            L.marker([-33.42418757,-70.61372669]).addTo(map).bindPopup('Informacion Centro').openPopup();
+            L.marker([-33.44347901,-70.62536825]).addTo(map).bindPopup('Informacion Centro').openPopup();
+            L.marker([-33.42993750,-70.62162017]).addTo(map).bindPopup('Informacion Centro').openPopup();
+            L.marker([-33.41779241,-70.60081590]).addTo(map).bindPopup('Informacion Centro').openPopup();
+        }
+
+        // $("ul.result-opt >li").on('click',function(){
+        //     var url_action = "{{=URL('pnac','view.load')}}"+'/'+$(this).data('id');
+        //     $(".result-opt,input").hide();
+        //     web2py_component(url_action,'view-form');
+        // })
+    });
+    var options = {
+      valueNames: ['name'],
+      page: 20,
+      plugins: [ ListPagination({}) ]
+    };
+
+    var userList = new List('colegios', options);
+</script>
+{{end}}

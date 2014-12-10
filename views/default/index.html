@@ -243,7 +243,7 @@
         $("div#loader").show();
         map.locate({setView: true, maxZoom: 18});
     }
-    // geoLocate();
+    geoLocate();
 
     function onLocationFound(e) {
         var radius = e.accuracy / 2;
@@ -353,7 +353,7 @@
         });
 
         function opciones_disponibles(opcion){
-            var opciones = ['Programa Nacional de Alimentación Complementaria','Jardines Integra'];
+            var opciones = ['Programa Nacional de Alimentación Complementaria','Jardines Integra','Colegios, Escuelas y Liceos'];
             for(i=0; i<opciones.length; i++){
                 if(opcion==opciones[i]){
                     return true;
