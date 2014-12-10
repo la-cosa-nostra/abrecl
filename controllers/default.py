@@ -36,8 +36,19 @@ def user():
     """
     if request.args(0)=='login':
         response.view = 'default/login.html'
+    elif request.args(0)=='profile':
+        response.view = 'default/profile.html'
     return dict(form=auth())
 
+@auth.requires_login()
+def familia():
+    db.familia.embarazada.show_if = (db.familia.sexo=='Femenino')
+    db.familia.amamantando.show_if = (db.familia.sexo=='Femenino')
+    db.familia.prevision.show_if = (db.familia.carga==False)
+
+    form = SQLFORM(db.familia)
+
+    return dict(form=form)
 
 @cache.action()
 def download():

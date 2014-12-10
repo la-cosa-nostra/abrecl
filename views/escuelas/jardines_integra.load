@@ -1,0 +1,147 @@
+<div id="jardines_integra">
+    <div class="row">
+        <div class="col-sm-12"><h4 style="text-align: center;">Resultados encontrados {{=len(dataset)}}</h4></div>
+    </div>
+    <input type="text" autofocus placeholder="Filtrar ..." class="form-control col-sm-12 search">
+    <button class="sort" data-sort="name">
+    Ordernar por Nombre
+    </button>
+    <div class="clearfix"></div>
+    <ul class="list-group result-opt list">
+        {{for d in dataset:}}
+        <li class="list-group-item" data-id="{{=d.id}}">
+            <span class="badge"><i class="glyphicon glyphicon-chevron-right"></i></span>
+            <span class="name">{{=d.nombre_jardin}}</span>
+        </li>
+        {{pass}}
+    </ul>
+    <ul class="pagination" style="position:relative; margin: auto;"></ul>
+</div>
+<div id="view-form" class="hide">
+    <h3 id="titulo-view" style="cursor:pointer;text-align:center"></h3>
+
+    <div id="datos">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <th>Ubicación</th>
+                    <td id="ubicacion-text"></td>
+                </tr>
+                <tr>
+                    <th>Área Geográfica</th>
+                    <td id="area_geografica-text"></td>
+                </tr>
+                <tr>
+                    <th>Dependencia</th>
+                    <td id="dependencia-text"></td>
+                </tr>
+                <tr>
+                    <th>Estado</th>
+                    <td id="estado-text"></td>
+                </tr>
+                <tr>
+                    <th>Alumnos año 2014</th>
+                    <td id="alumnos-text"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="text-align:center">
+            <button type="button" class="btn btn-default" id="mejorar">Ayudanos a Mejorar!</button>
+        </div>
+    </div>
+
+    <div id="form-mejorar" style="display:none;">
+        <form role="form" onsubmit="return false;">
+            <div style="text-align:center;" class="clearfix">
+                <div class="rating">
+                     <i class="glyphicon glyphicon-star"></i><i class="glyphicon glyphicon-star"></i><i class="glyphicon glyphicon-star"></i><i class="glyphicon glyphicon-star"></i><i class="glyphicon glyphicon-star-empty"></i>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="¿Que te gusto?">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="¿Que no te gusto?">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" placeholder="Describe tu experiencia"></textarea>
+            </div>
+            <button type="submit" class="btn btn-default">Enviar</button>
+        </form>
+    </div>
+    <div class="clearfix">
+        <hr>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $("#titulo-view").on('click',function(){
+                $("#datos").show();
+                $("#form-mejorar").hide();
+            })
+
+            $("#mejorar").on('click',function(){
+                $("#datos").hide();
+                $("#form-mejorar").show();
+            })
+        })
+    </script>
+</div>
+
+{{block js}}
+<script>
+    var action = '{{=action.subcat}}';
+    function setLatLngJJ(data){
+
+    }
+    $(document).ready(function(){
+        $("#loader").hide();
+        $("#direccion b").append($("<span/>").attr('id','brand-sub-action').html(' / '+action));
+        $("#direccion b").append($("<a/>").attr('id','brand-geo-map').addClass('pull-right').html('<i class="glyphicon glyphicon-globe"></i>'));
+
+        // $("#direccion i.glyphicon-globe").on('click',function(){
+        //     $("#jardines_integra,#view-form, i.glyphicon-globe").hide();
+        //     $("#map").css({
+        //         'width':'auto',
+        //         'height':'auto',
+        //         'bottom':0,
+        //         'top':'40px',
+        //         'right':0,
+        //         'left':0
+        //     });
+        //     map.invalidateSize();
+        //     map.setView(coords_location,12);
+        //     setTimeout(markers,2000);
+        //     // markers();
+        // })
+
+        // function markers(){
+        //     L.marker([0,0]).addTo(map).bindPopup('...').openPopup();
+        // }
+
+        $("ul.result-opt >li").on('click',function(){
+            var that = $(this);
+            console.log(that.data());
+            $("#jardines_integra").hide();
+            $("#titulo-view").text(that.data('nombre'));
+            $("#view-form .table").find('#ubicacion-text').text(that.data('comuna')+', '+that.data('provincia')+', '+that.data('region'));
+            $("#view-form .table").find('#dependencia-text').text(that.data('dependencia'));
+            $("#view-form .table").find('#estado-text').text(that.data('estado'));
+            $("#view-form .table").find('#alumnos-text').text(that.data('alumnos'));
+            $("#view-form .table").find('#area_geografica-text').text(that.data('area-geografica'));
+            $("#view-form").removeClass('hide');
+        });
+
+        $("ul.result-opt >li").each(function(i,e){
+        })
+    });
+    var options = {
+      valueNames: ['name'],
+      page: 20,
+      plugins: [ ListPagination({}) ]
+    };
+
+    var userList = new List('jardines_integra', options);
+</script>
+{{end}}

@@ -44,6 +44,7 @@
 'And': 'Y',
 'and rename it (required):': 'y renómbrela (requerido):',
 'and rename it:': ' y renómbrelo:',
+'Aplicar cambios': 'Aplicar cambios',
 'appadmin': 'appadmin',
 'appadmin is disabled because insecure channel': 'admin deshabilitado, el canal no es seguro',
 'application "%s" uninstalled': 'aplicación "%s" desinstalada',

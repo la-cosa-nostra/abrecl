@@ -1,0 +1,13 @@
+{{extend 'custom_layout.html'}}
+<h4 style="text-align:center">Familiares</h4>
+<div class="col-sm-12">
+    {{=form}}
+</div>
+
+{{block js}}
+<script>
+    $(document).ready(function(){
+        $("input,select,checkbox").addClass('form-control');
+    })
+</script>
+{{end}}

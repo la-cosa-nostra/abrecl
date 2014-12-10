@@ -8,6 +8,27 @@ import uuid
 
 DB = db.define_table
 
+DB('familia',
+    Field('user_id','reference auth_user',default=auth.user.id if auth.user else 1,writable=False,readable=False),
+    Field('nombre','string'),
+    Field('fecha_nacimiento','date'),
+    Field('sexo',requires=IS_IN_SET(['Femenino','Masculino'],zero=None)),
+    Field('carga','boolean',default=True),
+    Field('prevision',requires=IS_IN_SET(['Fonasa','Isapre'],zero=None)),
+    Field('embarazada','boolean',default=False),
+    Field('amamantando','boolean',default=False),
+    Field('chile_solidario','boolean',default=False,label='Pertenece a Chile Solidario o Programa de ingreso ético familiar'),
+    Field('enf_autoinmunes','boolean',default=False,label='Enfermedades autoinmunes'),
+    Field('desnutricion','boolean',default=False),
+    Field('nac_prematuro','boolean',default=False,label='Nacimiento prematuro'),
+    Field('diabetes','boolean',default=False),
+    Field('hipertencion','boolean',default=False),
+    Field('has_tbc','boolean',default=False,label='Tiene o tuvo TBC'),
+    Field('otra_enf_cronica','boolean',default=False,label='Otras enfermedades crónicas'),
+    auth.signature
+)
+
+
 DB('jardines_integra',
     Field('anho_proceso_asistencia'),
     Field('mes_proceso_asistencia'),

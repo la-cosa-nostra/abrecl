@@ -18,5 +18,5 @@ def colegios():
     res = requests.get(url_colegios)
     return dict(res=res.json()['d'],action=action,comuna=comuna)
 
-def jardines_juni():
+def jardines_junji():
     return dict()

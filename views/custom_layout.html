@@ -91,17 +91,23 @@
         padding: 0;
         background: #fff;
     }
+    #footer{
+
+    }
   </style>
 </head>
 <body>
     <div class="ios-topbar" style="height:50px;">
         <div id="chile-logo-right">
           {{if auth.user:}}
-            {{=auth.user.first_name}} {{=auth.user.last_name}}
-            (<a href="{{=URL('default','user',args='logout')}}">salir</a>)
+            <a href="{{=URL('default','user.html/profile')}}" class="btn btn-xs btn-info">{{=auth.user.first_name}} {{=auth.user.last_name}}</a>
+            <a href="{{=URL('default','user',args='logout')}}" class="btn btn-xs btn-danger">salir</a>
           {{pass}}
         </div>
         <div style="padding-top:10px:">
+            {{if request.function in ['user','familia']:}}
+            <a href="{{=URL('default','index.html')}}" style="line-height:3.5em; margin-left:5px;color:#fff; font-size:1.1em;" class="volver_index"><i class="fa fa-chevron-circle-left fa-2x"></i></a>
+            {{pass}}
           <a href="#" style="line-height:3.5em; margin-left:5px;color:#fff; display:none; font-size:1.1em;" class="volver_index"><i class="fa fa-chevron-circle-left fa-2x"></i></a>
         </div>
 
@@ -110,6 +116,12 @@
         {{include}}
     </div>
     <!-- /#wrapper -->
+
+    <div id="footer">
+        {{if auth.user:}}
+
+        {{pass}}
+    </div>
 
     <!-- The javascript =============================================
     (Placed at the end of the document so the pages load faster) -->

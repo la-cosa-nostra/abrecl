@@ -48,7 +48,45 @@ service = Service()
 plugins = PluginManager()
 
 ## create all tables needed by auth if not custom tables
+
+# - [Fonasa, Isapre]
+# [  ] Embarazada
+# [  ] Amamantando
+# [  ] Pertenece a Chile Solidario o Programa de ingreso ético familiar
+
+# [  ] Enfermedades autoinmunes
+# [  ] Desnutrición
+# [  ] Nacimiento prematuro
+# [  ] Diabetes
+# [  ] Hipertención
+# [  ] Tiene o tuvo TBC
+# [  ] Otras enfermedades crónicas
+
+auth.settings.extra_fields['auth_user'] = [
+    Field('rut','string',length=12),
+    Field('fecha_nacimiento','date'),
+    Field('sexo',requires=IS_IN_SET(['Femenino','Masculino'],zero=None)),
+    Field('prevision',requires=IS_IN_SET(['Fonasa','Isapre'],zero=None)),
+    Field('embarazada','boolean',default=False),
+    Field('amamantando','boolean',default=False),
+    Field('chile_solidario','boolean',default=False,label='Pertenece a Chile Solidario o Programa de ingreso ético familiar'),
+    Field('enf_autoinmunes','boolean',default=False,label='Enfermedades autoinmunes'),
+    Field('desnutricion','boolean',default=False),
+    Field('nac_prematuro','boolean',default=False,label='Nacimiento prematuro'),
+    Field('diabetes','boolean',default=False),
+    Field('hipertencion','boolean',default=False),
+    Field('has_tbc','boolean',default=False,label='Tiene o tuvo TBC'),
+    Field('otra_enf_cronica','boolean',default=False,label='Otras enfermedades crónicas')
+]
+
 auth.define_tables(username=False, signature=False)
+
+db.auth_user.embarazada.show_if = (db.auth_user.sexo=='Femenino')
+db.auth_user.amamantando.show_if = (db.auth_user.sexo=='Femenino')
+
+if request.controller=='default' and request.function=='user' and request.args(0)=='profile':
+    db.auth_user.email.writable=False
+    db.auth_user.email.readable=False
 
 ## configure email
 mail = auth.settings.mailer
