@@ -101,8 +101,12 @@ def beneficios():
     action = request.vars.action or False
 
     opciones = []
+    mis_beneficios = []
+    beneficios_familia = []
 
     if action=='salud':
+        mis_beneficios = beneficios_salud()
+        beneficios_familia = beneficios_salud(True)
         titulo = 'titulo a mostrar para categoria salud'
     elif action=='educacion':
         titulo = 'titulo a mostrar para categoria educacion'
@@ -123,7 +127,7 @@ def beneficios():
     else:
         return 'request invalid'
 
-    return dict(titulo=titulo,action=action)
+    return dict(titulo=titulo,action=action,mis_beneficios=mis_beneficios,beneficios_familia=beneficios_familia)
 
 def buscar():
     action = request.vars.action or False

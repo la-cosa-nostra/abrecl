@@ -1,13 +1,22 @@
-<input type="search" placeholder="Filtrar ..." class="form-control col-sm-12">
-<div class="clearfix"></div>
-<ul class="list-group result-opt">
-    {{for d in dataset:}}
-    <li class="list-group-item" data-id="{{=d.id}}">
-        <span class="badge"><i class="glyphicon glyphicon-chevron-right"></i></span>
-        {{=d.nombre_oficial}}
-    </li>
-    {{pass}}
-</ul>
+<div id="listado">
+    <div class="row">
+        <div class="col-sm-12"><h4 style="text-align: center;">Resultados encontrados {{=len(dataset)}}</h4></div>
+    </div>
+    <input type="text" autofocus placeholder="Filtrar ..." class="form-control col-sm-12 search">
+    <button class="sort btn" data-sort="name">
+    Ordernar por Nombre
+    </button>
+    <div class="clearfix"></div>
+    <ul class="list-group result-opt list">
+        {{for d in dataset:}}
+        <li class="list-group-item" data-id="{{=d.id}}">
+            <span class="badge"><i class="glyphicon glyphicon-chevron-right"></i></span>
+            <span class="name">{{=d.nombre_oficial}}</span>
+        </li>
+        {{pass}}
+    </ul>
+    <ul class="pagination"></ul>
+</div>
 <div id="view-form"></div>
 
 <script>
@@ -18,7 +27,7 @@
         $("#direccion b").append($("<a/>").attr('id','brand-geo-map').addClass('pull-right').html('<i class="glyphicon glyphicon-globe"></i>'));
 
         $("#direccion i.glyphicon-globe").on('click',function(){
-            $(".result-opt,input").hide();
+            $("#listado,#view-form,#direccion i.glyphicon-globe").hide();
             $("#map").css({
                 'width':'auto',
                 'height':'auto',
@@ -43,8 +52,15 @@
 
         $("ul.result-opt >li").on('click',function(){
             var url_action = "{{=URL('pnac','view.load')}}"+'/'+$(this).data('id');
-            $(".result-opt,input").hide();
+            $("#listado").hide();
             web2py_component(url_action,'view-form');
         })
     });
+    var options = {
+      valueNames: ['name'],
+      page: 20,
+      plugins: [ ListPagination({}) ]
+    };
+
+    var userList = new List('listado', options);
 </script>

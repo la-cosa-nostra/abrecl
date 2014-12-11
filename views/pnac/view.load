@@ -65,7 +65,7 @@
 </div>
 
 <div id="form-mejorar" style="display:none;">
-    <form role="form">
+    <form role="form" onsubmit="return false;">
         <div style="text-align:center;" class="clearfix">
             <div class="rating">
                  <i class="glyphicon glyphicon-star"></i><i class="glyphicon glyphicon-star"></i><i class="glyphicon glyphicon-star"></i><i class="glyphicon glyphicon-star"></i><i class="glyphicon glyphicon-star-empty"></i>
