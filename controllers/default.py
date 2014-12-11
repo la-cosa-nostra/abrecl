@@ -109,6 +109,8 @@ def beneficios():
         beneficios_familia = beneficios_salud(True)
         titulo = 'titulo a mostrar para categoria salud'
     elif action=='educacion':
+        mis_beneficios = beneficios_educacion()
+        beneficios_familia = beneficios_educacion(True)
         titulo = 'titulo a mostrar para categoria educacion'
     elif action=='seguridad':
         titulo = 'titulo a mostrar para categoria seguridad'

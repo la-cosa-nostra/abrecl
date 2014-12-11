@@ -105,6 +105,31 @@ def beneficios_salud(familia=False):
 
         ######## FIN CHEQUEO SALUD ########
 
+        resultset.append({
+            'user':d.nombre if familia else d.first_name,
+            'beneficios':result_temp,
+            'familia':familia
+            })
+
+
+    return resultset
+
+
+def beneficios_educacion(familia=False):
+    if familia:
+        dataset = db(db.familia.user_id==auth.user.id).select()
+    else:
+        dataset = db(db.auth_user.id==auth.user.id).select()
+
+    resultset = []
+    result_temp = []
+
+    default_img = 'http://placehold.it/150.png/09f/fff&text=Beneficio'
+
+    for d in dataset:
+        diff = request.now.date() - d.fecha_nacimiento
+        result_temp = []
+
         ######## EDUCACION ########
         if diff.days/365>=2 and diff.days/365<=4: # 2 <= x <= 4
             result_temp.append({
