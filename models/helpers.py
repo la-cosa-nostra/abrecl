@@ -92,14 +92,48 @@ def beneficios_salud(familia=False):
 
         ######## FIN PNAC ########
 
-        # if d.embaradazada: # está embarazada
-        #     result_temp.append({
-        #         'cat':'pnac',
-        #         'id':5,
-        #         'nombre':'Leche Purita Mamá',
-        #         'descripcion':'Puede retirar leche Purita Mamá (en cualquiera de los centros cercanos CESFAM).',
-        #         'imagen':'http://placehold.it/150.png/09f/fff&text=Leche Purita Mamá'
-        #         })
+        ######## CHEQUEO SALUD ########
+
+        if d.prevision=='Fonasa' and (diff.days <30 or diff.days/365>=15 or d.embarazada): # guagua en fonasa
+            result_temp.append({
+                'cat':'check_salud',
+                'id':8,
+                'nombre':'Examen Preventivo',
+                'descripcion':'Examen anual de salud gratuito en CESFAM',
+                'imagen':URL('static','images/beneficios/examen_preventivo.jpg')
+                })
+
+        ######## FIN CHEQUEO SALUD ########
+
+        ######## EDUCACION ########
+        if diff.days/365>=2 and diff.days/365<=4: # 2 <= x <= 4
+            result_temp.append({
+                'cat':'educacion',
+                'id':9,
+                'nombre':'Inscripción en jardín Junji',
+                'descripcion':'Inscripción en jardín Junji',
+                'imagen':URL('static','images/beneficios/junji.jpg')
+                })
+
+        if diff.days>=85 and diff.days <= 1824: # 2 <= x <= 4
+            result_temp.append({
+                'cat':'educacion',
+                'id':10,
+                'nombre':'Inscripción en jardín Integra',
+                'descripcion':'Inscripción en jardín Integra',
+                'imagen':URL('static','images/beneficios/integra.jpg')
+                })
+
+        if diff.days/365>4: # 2 <= x <= 4
+            result_temp.append({
+                'cat':'educacion',
+                'id':11,
+                'nombre':'Educación Gratutita Municipal.',
+                'descripcion':'Educación básica y media gratutita en escuelas y liceos municipales.',
+                'imagen':URL('static','images/beneficios/educacion_publica.jpg')
+                })
+
+
 
         resultset.append({
             'user':d.nombre if familia else d.first_name,

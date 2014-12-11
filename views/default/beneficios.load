@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class="col-sm-12" style="text-align: center">
-            <h4>Mis Beneficios</h4>
+            <h3>Mis Beneficios</h3>
             {{if mis_beneficios[0]['beneficios']:}}
             {{for k,d in enumerate(mis_beneficios[0]['beneficios']):}}
             {{if k==0:}}<div class="row">{{pass}}
@@ -20,15 +20,15 @@
             {{pass}}
         </div>
     </div>
-    <hr>
+    <div class="clearfix"><hr></div>
     <div class="row">
         <div class="col-sm-12" style="text-align: center">
-            <h4>Beneficios para mi familia</h4>
+            <h3>Beneficios para mi familia</h3>
             {{if beneficios_familia:}}
             {{for d in beneficios_familia:}}
             <div class="row">
                 <div class="col-sm-12">
-                    <h3>Beneficios para {{=d['user']}}</h3>
+                    <h4>Beneficios para {{=d['user']}}</h4>
                     {{for k,b in enumerate(d['beneficios']):}}
                     <div class="col-sm-4">
                         <a href="javascript:;" class="thumbnail" data-nombre="{{=b['nombre']}}" data-imagen="{{=b['imagen']}}" data-descripcion="{{=b['descripcion']}}" data-id="{{=b['id']}}">
